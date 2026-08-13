@@ -12,7 +12,7 @@ import {
   Braces, Link2, Scissors, Eye, Wand2,
   Cpu, Star, History
 } from "lucide-react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { StatBlock } from "@/components/ui/StatBlock";
 import { TOOLS, ToolCategory } from "@/lib/tools-registry";
 
@@ -125,7 +125,7 @@ export default function Home() {
     localStorage.setItem("toolkit-favorites", JSON.stringify(newFavs));
   };
 
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
@@ -133,7 +133,7 @@ export default function Home() {
     }
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
     show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
   };
