@@ -8,6 +8,8 @@ import Link from "next/link";
 
 import { SearchButton } from "@/components/search-button";
 import { OfflineIndicator } from "@/components/offline-indicator";
+import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 const plusJakartaSans = Plus_Jakarta_Sans({ subsets: ["latin"], variable: "--font-sans", weight: ["400", "500", "600", "700", "800"] });
 const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-geist-mono" });
@@ -64,22 +66,24 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${plusJakartaSans.variable} ${jetbrainsMono.variable} font-sans bg-bg-base text-text-primary min-h-screen flex flex-col antialiased overflow-x-hidden`}>
-        <nav className="border-b border-border-line bg-bg-panel/60 backdrop-blur-md sticky top-0 z-40" style={{ boxShadow: "0 1px 0 #4f46e5" }}>
-          <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-            <Link href="/" className="flex items-center gap-2.5 group">
-              <Image src="/logo.png" alt="ToolKit Logo" width={140} height={48} className="h-12 w-auto object-contain" priority />
-            </Link>
-            <div className="flex items-center gap-4">
-              <SearchButton />
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${plusJakartaSans.variable} ${jetbrainsMono.variable} font-sans bg-bg-base text-text-primary min-h-screen flex flex-col antialiased overflow-x-hidden transition-colors duration-300`}>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <nav className="border-b border-border-line bg-bg-panel/60 backdrop-blur-md sticky top-0 z-40 transition-colors duration-300" style={{ boxShadow: "0 1px 0 var(--color-accent-primary)" }}>
+            <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+              <Link href="/" className="flex items-center gap-2.5 group">
+                <Image src="/logo.png" alt="ToolKit Logo" width={140} height={48} className="h-12 w-auto object-contain dark:invert" priority />
+              </Link>
+              <div className="flex items-center gap-2">
+                <SearchButton />
+                <ThemeToggle />
+              </div>
             </div>
-          </div>
-        </nav>
+          </nav>
 
-        <main className="flex-1 container mx-auto px-4 py-8">
-          {children}
-        </main>
+          <main className="flex-1 container mx-auto px-4 py-8">
+            {children}
+          </main>
 
         <footer className="border-t border-border-line bg-bg-panel/30 py-8 mt-auto">
           <div className="container mx-auto px-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
@@ -105,6 +109,7 @@ export default function RootLayout({
         
         <OfflineIndicator />
         <CommandPalette />
+        </ThemeProvider>
       </body>
     </html>
   );

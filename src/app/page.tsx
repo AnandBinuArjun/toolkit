@@ -150,7 +150,7 @@ export default function Home() {
       <motion.section initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, type: "spring" }} className="relative pt-6 pb-2">
         <div
           className="absolute -top-10 left-1/2 -translate-x-1/2 w-full max-w-[600px] h-[200px] rounded-full opacity-20 pointer-events-none blur-3xl"
-          style={{ background: "radial-gradient(ellipse, #4f46e5 0%, transparent 70%)" }}
+          style={{ background: "radial-gradient(ellipse, var(--color-accent-primary) 0%, transparent 70%)" }}
         />
         <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
           <div className="lg:col-span-7 space-y-6">
@@ -161,7 +161,7 @@ export default function Home() {
               </div>
               <h1 className="text-4xl md:text-6xl font-extrabold text-text-primary leading-tight tracking-tight">
                 {TOOLS.length} tools.<br />
-                <span style={{ background: "linear-gradient(90deg, #4f46e5, #0ea5e9)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+                <span style={{ background: "linear-gradient(90deg, var(--color-accent-primary), var(--color-accent-secondary))", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
                   Zero uploads.
                 </span>
               </h1>
@@ -200,7 +200,7 @@ export default function Home() {
                     return (
                       <motion.div key={t.id} variants={itemVariants}>
                         <Link href={t.href} className="group block h-full">
-                          <div className="relative h-full flex flex-col p-5 bg-bg-panel border border-border-line rounded-2xl hover:border-accent-primary/40 transition-all duration-200 hover:-translate-y-0.5 group-hover:shadow-[0_0_24px_rgba(79,70,229,0.12)]">
+                          <div className="relative h-full flex flex-col p-5 bg-bg-panel border border-border-line rounded-2xl hover:border-accent-primary/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:hover:shadow-[0_8px_30px_rgba(99,102,241,0.15)] group-hover:shadow-[0_8px_30px_rgba(79,70,229,0.12)]">
                             <button 
                               onClick={(e) => toggleFavorite(e, t.id)}
                               className="absolute top-4 right-4 p-1.5 rounded-md transition-colors text-yellow-400 bg-yellow-400/10"
@@ -240,7 +240,7 @@ export default function Home() {
                     return (
                       <motion.div key={t.id} variants={itemVariants}>
                         <Link href={t.href} className="group block h-full">
-                          <div className="relative h-full flex flex-col p-5 bg-bg-panel border border-border-line rounded-2xl hover:border-accent-primary/40 transition-all duration-200 hover:-translate-y-0.5 group-hover:shadow-[0_0_24px_rgba(79,70,229,0.12)]">
+                          <div className="relative h-full flex flex-col p-5 bg-bg-panel border border-border-line rounded-2xl hover:border-accent-primary/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:hover:shadow-[0_8px_30px_rgba(99,102,241,0.15)] group-hover:shadow-[0_8px_30px_rgba(79,70,229,0.12)]">
                             <button 
                               onClick={(e) => toggleFavorite(e, t.id)}
                               className={`absolute top-4 right-4 p-1.5 rounded-md transition-colors ${isFav ? "text-yellow-400 bg-yellow-400/10" : "text-text-muted opacity-0 group-hover:opacity-100 hover:bg-border-line"}`}
@@ -299,7 +299,7 @@ export default function Home() {
             return (
               <motion.div key={tool.id} variants={itemVariants}>
                 <Link href={tool.href} className="group block h-full">
-                  <div className="relative h-full flex flex-col p-5 bg-bg-panel border border-border-line rounded-2xl hover:border-accent-primary/40 transition-all duration-200 hover:-translate-y-0.5 group-hover:shadow-[0_0_24px_rgba(79,70,229,0.12)]">
+                  <div className="relative h-full flex flex-col p-5 bg-bg-panel border border-border-line rounded-2xl hover:border-accent-primary/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:hover:shadow-[0_8px_30px_rgba(99,102,241,0.15)] group-hover:shadow-[0_8px_30px_rgba(79,70,229,0.12)]">
                     <button 
                       onClick={(e) => toggleFavorite(e, tool.id)}
                       className={`absolute top-4 right-4 p-1.5 rounded-md transition-colors ${isFav ? "text-yellow-400 bg-yellow-400/10" : "text-text-muted opacity-0 group-hover:opacity-100 hover:bg-border-line"}`}

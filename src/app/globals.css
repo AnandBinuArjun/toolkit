@@ -52,19 +52,19 @@
   --card-foreground: #0f172a;
   --popover: #ffffff;
   --popover-foreground: #0f172a;
-  --primary: #4f46e5;
+  --primary: var(--accent-primary);
   --primary-foreground: #ffffff;
   --secondary: #0ea5e9;
   --secondary-foreground: #ffffff;
   --muted: #f1f5f9;
   --muted-foreground: #64748b;
   --accent: #f1f5f9;
-  --accent-foreground: #4f46e5;
+  --accent-foreground: var(--accent-primary);
   --destructive: #ef4444;
   --destructive-foreground: #ffffff;
   --border: #e2e8f0;
   --input: #e2e8f0;
-  --ring: #4f46e5;
+  --ring: var(--accent-primary);
   --radius: 0.5rem;
 
   /* ── Custom Design Tokens ───────────────────────────── */
@@ -80,36 +80,36 @@
 }
 
 .dark {
-  /* Keep synchronized for this implementation */
-  --background: #f8fafc;
-  --foreground: #0f172a;
-  --card: #ffffff;
-  --card-foreground: #0f172a;
-  --popover: #ffffff;
-  --popover-foreground: #0f172a;
-  --primary: #4f46e5;
+  /* Slate/Neutral Dark Palette */
+  --background: #020617;
+  --foreground: #f8fafc;
+  --card: #0f172a;
+  --card-foreground: #f8fafc;
+  --popover: #0f172a;
+  --popover-foreground: #f8fafc;
+  --primary: var(--accent-primary);
   --primary-foreground: #ffffff;
-  --secondary: #0ea5e9;
+  --secondary: #1e293b;
   --secondary-foreground: #ffffff;
-  --muted: #f1f5f9;
-  --muted-foreground: #64748b;
-  --accent: #f1f5f9;
-  --accent-foreground: #4f46e5;
-  --destructive: #ef4444;
-  --destructive-foreground: #ffffff;
-  --border: #e2e8f0;
-  --input: #e2e8f0;
-  --ring: #4f46e5;
+  --muted: #1e293b;
+  --muted-foreground: #94a3b8;
+  --accent: #1e293b;
+  --accent-foreground: #f8fafc;
+  --destructive: #7f1d1d;
+  --destructive-foreground: #f8fafc;
+  --border: #1e293b;
+  --input: #1e293b;
+  --ring: var(--accent-primary);
 
-  --bg-base:          #f8fafc;
-  --bg-panel:         #ffffff;
-  --border-line:      #e2e8f0;
-  --text-primary:     #0f172a;
-  --text-muted:       #64748b;
-  --accent-primary:   #4f46e5;
+  --bg-base:          #020617;
+  --bg-panel:         #0f172a;
+  --border-line:      #1e293b;
+  --text-primary:     #f8fafc;
+  --text-muted:       #94a3b8;
+  --accent-primary:   #6366f1; /* lighter indigo for dark mode contrast */
   --accent-secondary: #0ea5e9;
-  --accent-warn:      #f59e0b;
-  --accent-danger:    #ef4444;
+  --accent-warn:      #fbbf24;
+  --accent-danger:    #f87171;
 }
 
 @layer base {
@@ -126,7 +126,8 @@
     @apply bg-background text-foreground;
   }
   /* Mono font only for actual code/data output — never general UI */
-  .font-code {
+  .font-code, pre, code {
     font-family: var(--font-geist-mono), "Cascadia Code", monospace;
+    @apply break-words whitespace-pre-wrap overflow-x-auto;
   }
 }
