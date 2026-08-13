@@ -11,7 +11,7 @@ import { Textarea } from "@/components/ui/textarea";
 export default function UrlParserPage() {
   const tool = TOOLS.find((t) => t.id === "url-parser")!;
   
-  const [urlInput, setUrlInput] = useState("https://user:pass@tools.sivin.dev:443/category/tools?search=query&page=1#section2");
+  const [urlInput, setUrlInput] = useState("https://user:pass@tools.abarjun.online:443/category/tools?search=query&page=1#section2");
   const [parsed, setParsed] = useState<URL | null>(null);
   const [params, setParams] = useState<{ key: string; value: string }[]>([]);
   const [error, setError] = useState<string | null>(null);

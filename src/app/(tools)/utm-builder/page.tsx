@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 export default function UtmBuilderPage() {
   const tool = TOOLS.find((t) => t.id === "utm-builder")!;
   
-  const [baseUrl, setBaseUrl] = useState("https://tools.sivin.dev");
+  const [baseUrl, setBaseUrl] = useState("https://tools.abarjun.online");
   const [source, setSource] = useState("newsletter");
   const [medium, setMedium] = useState("email");
   const [campaign, setCampaign] = useState("summer_sale");

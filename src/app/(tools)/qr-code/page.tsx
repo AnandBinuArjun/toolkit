@@ -12,7 +12,7 @@ import { Textarea } from "@/components/ui/textarea";
 export default function QrCodePage() {
   const tool = TOOLS.find((t) => t.id === "qr-code")!;
   
-  const [value, setValue] = useState("https://tools.sivin.dev");
+  const [value, setValue] = useState("https://tools.abarjun.online");
   const [fgColor, setFgColor] = useState("#0066cc");
   const [bgColor, setBgColor] = useState("#ffffff");
   const [level, setLevel] = useState<"L" | "M" | "Q" | "H">("M");

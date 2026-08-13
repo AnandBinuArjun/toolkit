@@ -14,10 +14,10 @@ export default function MetaTagGeneratorPage() {
   const [title, setTitle] = useState("ToolKit - 50+ Web Tools");
   const [description, setDescription] = useState("A collection of 50+ client-side tools for developers, designers, and creators.");
   const [keywords, setKeywords] = useState("tools, dev, design, product, web");
-  const [author, setAuthor] = useState("Sivin Varghese");
-  const [url, setUrl] = useState("https://tools.sivin.dev");
-  const [imageUrl, setImageUrl] = useState("https://tools.sivin.dev/og-image.png");
-  const [twitterHandle, setTwitterHandle] = useState("@sivinvarghese_");
+  const [author, setAuthor] = useState("Anand Binu Arjun");
+  const [url, setUrl] = useState("https://tools.abarjun.online");
+  const [imageUrl, setImageUrl] = useState("https://tools.abarjun.online/og-image.png");
+  const [twitterHandle, setTwitterHandle] = useState("@AnandBinuArjun");
   const [themeColor, setThemeColor] = useState("#000000");
 
   const [copied, setCopied] = useState(false);
