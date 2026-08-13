@@ -8,6 +8,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: '*',
       allow: '/',
     },
-    sitemap: 'https://tools.abarjun.online/sitemap.xml',
+    sitemap: 'https://abarjun.online/sitemap.xml',
   }
 }

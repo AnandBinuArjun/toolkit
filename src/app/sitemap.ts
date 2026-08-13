@@ -4,7 +4,7 @@ import { TOOLS } from '@/lib/tools-registry'
 export const dynamic = "force-static";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://tools.abarjun.online'
+  const baseUrl = 'https://abarjun.online'
   
   const toolRoutes = TOOLS.map((tool) => ({
     url: `${baseUrl}/${tool.id}`,
