@@ -13,6 +13,7 @@ const plusJakartaSans = Plus_Jakarta_Sans({ subsets: ["latin"], variable: "--fon
 const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-geist-mono" });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://tools.abarjun.online"),
   title: "ToolKit | Client-Side Utilities",
   description: "A collection of 69+ dev, design, and product tools that run entirely in your browser.",
   manifest: "/site.webmanifest",
@@ -27,7 +28,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://toolkit.example.com",
+    url: "https://tools.abarjun.online",
     siteName: "ToolKit",
     images: [
       {
@@ -43,6 +44,13 @@ export const metadata: Metadata = {
     title: "ToolKit | Client-Side Utilities",
     description: "A collection of dev, design, and product tools that run entirely in your browser.",
     images: ["/banner.png"],
+  },
+  alternates: {
+    canonical: "https://tools.abarjun.online",
+    languages: {
+      "en-US": "https://tools.abarjun.online",
+      "x-default": "https://tools.abarjun.online",
+    },
   },
 };
 
