@@ -12,7 +12,7 @@ import {
   Braces, Link2, Scissors, Eye, Wand2,
   Cpu, Star, History
 } from "lucide-react";
-import { motion, Variants } from "framer-motion";
+import { motion, Variants, useReducedMotion } from "framer-motion";
 import { StatBlock } from "@/components/ui/StatBlock";
 import { TOOLS, ToolCategory } from "@/lib/tools-registry";
 
@@ -105,6 +105,7 @@ export default function Home() {
   const [favorites, setFavorites] = useState<string[]>([]);
   const [recentTools, setRecentTools] = useState<string[]>([]);
   const [isMounted, setIsMounted] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
     setIsMounted(true);
@@ -129,7 +130,7 @@ export default function Home() {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
-      transition: { staggerChildren: 0.05 }
+      transition: { staggerChildren: shouldReduceMotion ? 0 : 0.05 }
     }
   };
 
@@ -153,7 +154,7 @@ export default function Home() {
           style={{ background: "radial-gradient(ellipse, var(--color-accent-primary) 0%, transparent 70%)" }}
         />
         <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-          <div className="lg:col-span-7 space-y-6">
+          <div className="w-full lg:col-span-7 space-y-6">
             <div className="space-y-4">
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent-primary/10 border border-accent-primary/20 text-accent-primary text-xs font-semibold">
                 <span className="w-1.5 h-1.5 rounded-full bg-accent-primary animate-pulse inline-block" />
@@ -172,7 +173,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div className="w-full lg:col-span-5 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-1 gap-3">
             <StatBlock value={TOOLS.length.toString()} label="Total Tools" icon={<Zap size={18} />} />
             <StatBlock value="100%" label="Local" icon={<Shield size={18} />} />
             <StatBlock value={tabs.length.toString()} label="Categories" icon={<Layers size={18} />} />
@@ -191,16 +192,16 @@ export default function Home() {
                 <h2 className="text-sm font-bold flex items-center gap-2 text-text-primary">
                   <Star size={16} className="text-yellow-400" fill="currentColor" /> Favorites
                 </h2>
-                <motion.div variants={containerVariants} initial="hidden" animate="show" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+                <motion.div variants={containerVariants} initial="hidden" animate="show" className="flex sm:grid flex-row overflow-x-auto sm:overflow-visible snap-x snap-mandatory sm:snap-none grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 pb-4 sm:pb-0 no-scrollbar">
                   {favorites.map(id => {
                     const t = TOOLS.find(tool => tool.id === id);
                     if (!t) return null;
                     const iconStyle = ICON_STYLE[t.category as ToolCategory];
                     const toolIcon = TOOL_ICONS[t.id] ?? <Layers size={18} />;
                     return (
-                      <motion.div key={t.id} variants={itemVariants}>
+                      <motion.div key={t.id} variants={itemVariants} className="flex-shrink-0 w-[260px] sm:w-auto snap-center sm:snap-align-none">
                         <Link href={t.href} className="group block h-full">
-                          <div className="relative h-full flex flex-col p-5 bg-bg-panel border border-border-line rounded-2xl hover:border-accent-primary/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:hover:shadow-[0_8px_30px_rgba(99,102,241,0.15)] group-hover:shadow-[0_8px_30px_rgba(79,70,229,0.12)]">
+                          <div className="relative h-full flex flex-col p-4 md:p-5 bg-bg-panel border border-border-line rounded-2xl hover:border-accent-primary/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:hover:shadow-[0_8px_30px_rgba(99,102,241,0.15)] group-hover:shadow-[0_8px_30px_rgba(79,70,229,0.12)]">
                             <button 
                               onClick={(e) => toggleFavorite(e, t.id)}
                               className="absolute top-4 right-4 p-1.5 rounded-md transition-colors text-yellow-400 bg-yellow-400/10"
@@ -230,7 +231,7 @@ export default function Home() {
                 <h2 className="text-sm font-bold flex items-center gap-2 text-text-primary">
                   <History size={16} className="text-accent-secondary" /> Recently Used
                 </h2>
-                <motion.div variants={containerVariants} initial="hidden" animate="show" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+                <motion.div variants={containerVariants} initial="hidden" animate="show" className="flex sm:grid flex-row overflow-x-auto sm:overflow-visible snap-x snap-mandatory sm:snap-none grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 pb-4 sm:pb-0 no-scrollbar">
                   {recentTools.map(id => {
                     const t = TOOLS.find(tool => tool.id === id);
                     if (!t) return null;
@@ -238,9 +239,9 @@ export default function Home() {
                     const iconStyle = ICON_STYLE[t.category as ToolCategory];
                     const toolIcon = TOOL_ICONS[t.id] ?? <Layers size={18} />;
                     return (
-                      <motion.div key={t.id} variants={itemVariants}>
+                      <motion.div key={t.id} variants={itemVariants} className="flex-shrink-0 w-[260px] sm:w-auto snap-center sm:snap-align-none">
                         <Link href={t.href} className="group block h-full">
-                          <div className="relative h-full flex flex-col p-5 bg-bg-panel border border-border-line rounded-2xl hover:border-accent-primary/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:hover:shadow-[0_8px_30px_rgba(99,102,241,0.15)] group-hover:shadow-[0_8px_30px_rgba(79,70,229,0.12)]">
+                          <div className="relative h-full flex flex-col p-4 md:p-5 bg-bg-panel border border-border-line rounded-2xl hover:border-accent-primary/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:hover:shadow-[0_8px_30px_rgba(99,102,241,0.15)] group-hover:shadow-[0_8px_30px_rgba(79,70,229,0.12)]">
                             <button 
                               onClick={(e) => toggleFavorite(e, t.id)}
                               className={`absolute top-4 right-4 p-1.5 rounded-md transition-colors ${isFav ? "text-yellow-400 bg-yellow-400/10" : "text-text-muted opacity-0 group-hover:opacity-100 hover:bg-border-line"}`}
@@ -268,19 +269,19 @@ export default function Home() {
         )}
 
         {/* Pill tabs */}
-        <div className="flex items-center gap-2 flex-wrap">
+        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar snap-x pb-1 sm:pb-0 sm:flex-wrap">
           {tabs.map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold border transition-all ${
+              className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold border transition-all flex-shrink-0 snap-start min-h-[44px] ${
                 activeTab === tab
                   ? "bg-accent-primary text-white border-accent-primary shadow-[0_0_20px_rgba(79,70,229,0.3)]"
                   : "bg-bg-panel text-text-muted border-border-line hover:border-accent-primary/50 hover:text-text-primary"
               }`}
             >
               {CATEGORY_ICONS[tab]}
-              {CATEGORY_LABELS[tab]}
+              <span className="hidden sm:inline">{CATEGORY_LABELS[tab]}</span>
               <span className={`text-xs px-1.5 py-0.5 rounded-full font-medium ${
                 activeTab === tab ? "bg-white/20 text-white" : "bg-border-line text-text-muted"
               }`}>
@@ -299,7 +300,7 @@ export default function Home() {
             return (
               <motion.div key={tool.id} variants={itemVariants}>
                 <Link href={tool.href} className="group block h-full">
-                  <div className="relative h-full flex flex-col p-5 bg-bg-panel border border-border-line rounded-2xl hover:border-accent-primary/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:hover:shadow-[0_8px_30px_rgba(99,102,241,0.15)] group-hover:shadow-[0_8px_30px_rgba(79,70,229,0.12)]">
+                  <div className="relative h-full flex flex-col p-4 md:p-5 bg-bg-panel border border-border-line rounded-2xl hover:border-accent-primary/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:hover:shadow-[0_8px_30px_rgba(99,102,241,0.15)] group-hover:shadow-[0_8px_30px_rgba(79,70,229,0.12)]">
                     <button 
                       onClick={(e) => toggleFavorite(e, tool.id)}
                       className={`absolute top-4 right-4 p-1.5 rounded-md transition-colors ${isFav ? "text-yellow-400 bg-yellow-400/10" : "text-text-muted opacity-0 group-hover:opacity-100 hover:bg-border-line"}`}

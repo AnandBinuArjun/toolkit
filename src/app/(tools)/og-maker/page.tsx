@@ -29,7 +29,7 @@ export default function OgMakerPage() {
     
     try {
       const canvas = await html2canvas(cardRef.current, {
-        scale: 2, // 2x for retina quality
+        scale: typeof window !== "undefined" ? Math.max(2, window.devicePixelRatio) : 2, // at least 2x, but match high-DPI mobile screens
         useCORS: true,
         allowTaint: true,
         backgroundColor: null

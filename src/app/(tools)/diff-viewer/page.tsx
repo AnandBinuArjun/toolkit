@@ -13,6 +13,7 @@ export default function DiffViewerPage() {
   const [newText, setNewText] = useState("Hello World\nThis is a changed line.\nThis line stays.\nThis is a new line.");
   const [diffResult, setDiffResult] = useState<Change[]>([]);
   const [viewMode, setViewMode] = useState<"edit" | "diff">("edit");
+  const [activeEditTab, setActiveEditTab] = useState<"original" | "modified">("original");
 
   React.useEffect(() => {
     if (viewMode === "diff") {
@@ -29,13 +30,13 @@ export default function DiffViewerPage() {
         <div className="flex justify-center border-b border-border-line pb-4">
           <div className="flex bg-bg-base border border-border-line rounded overflow-hidden">
             <button 
-              className={`px-6 py-2 text-sm font-mono ${viewMode === "edit" ? "bg-accent-primary/20 text-accent-primary" : "text-text-muted hover:bg-bg-panel"}`}
+              className={`px-6 py-2 text-sm font-mono ${viewMode === "edit" ? "bg-accent-primary/10 text-accent-primary" : "text-text-muted hover:bg-bg-panel"}`}
               onClick={() => setViewMode("edit")}
             >
               1. Enter Text
             </button>
             <button 
-              className={`px-6 py-2 text-sm font-mono border-l border-border-line ${viewMode === "diff" ? "bg-accent-primary/20 text-accent-primary" : "text-text-muted hover:bg-bg-panel"}`}
+              className={`px-6 py-2 text-sm font-mono border-l border-border-line ${viewMode === "diff" ? "bg-accent-primary/10 text-accent-primary" : "text-text-muted hover:bg-bg-panel"}`}
               onClick={() => setViewMode("diff")}
             >
               2. View Diff
@@ -45,8 +46,25 @@ export default function DiffViewerPage() {
 
         {/* Edit Mode */}
         {viewMode === "edit" && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 flex-1 h-full">
-            <div className="flex flex-col h-full">
+          <div className="flex-1 flex flex-col h-full">
+            <div className="flex flex-col lg:hidden mb-4">
+              <div className="flex bg-bg-base border border-border-line rounded overflow-hidden">
+                <button 
+                  className={`flex-1 py-2 text-sm font-medium ${activeEditTab === "original" ? "bg-accent-primary/10 text-accent-primary" : "text-text-muted hover:bg-bg-panel"}`}
+                  onClick={() => setActiveEditTab("original")}
+                >
+                  Original
+                </button>
+                <button 
+                  className={`flex-1 py-2 text-sm font-medium border-l border-border-line ${activeEditTab === "modified" ? "bg-accent-primary/10 text-accent-primary" : "text-text-muted hover:bg-bg-panel"}`}
+                  onClick={() => setActiveEditTab("modified")}
+                >
+                  Modified
+                </button>
+              </div>
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 flex-1 h-full">
+              <div className={`flex-col h-full ${activeEditTab === "original" ? "flex" : "hidden lg:flex"}`}>
               <label className="text-xs font-sans font-medium text-text-muted mb-2">Original Text</label>
               <Textarea
                 className="flex-1 w-full bg-bg-panel border border-border-line rounded-lg p-4 font-mono text-sm text-text-primary focus:outline-none focus:border-accent-primary transition-colors resize-none"
@@ -57,7 +75,7 @@ export default function DiffViewerPage() {
               />
             </div>
 
-            <div className="flex flex-col h-full">
+            <div className={`flex-col h-full ${activeEditTab === "modified" ? "flex" : "hidden lg:flex"}`}>
               <label className="text-xs font-sans font-medium text-text-muted mb-2">Modified Text</label>
               <Textarea
                 className="flex-1 w-full bg-bg-panel border border-border-line rounded-lg p-4 font-mono text-sm text-text-primary focus:outline-none focus:border-accent-primary transition-colors resize-none"
@@ -67,6 +85,7 @@ export default function DiffViewerPage() {
                 spellCheck={false}
               />
             </div>
+          </div>
           </div>
         )}
 

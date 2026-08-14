@@ -54,6 +54,7 @@ export default function ColorPalettePage() {
   return (
     <ToolLayout id={tool.id} name={tool.name} description={tool.description}>
       <div className="flex flex-col space-y-8">
+        <div className="flex flex-col-reverse md:flex-col gap-8">
         
         {/* Controls */}
         <div className="flex flex-col md:flex-row gap-4 items-center bg-bg-base p-4 border border-border-line rounded-lg">
@@ -119,6 +120,7 @@ export default function ColorPalettePage() {
               </div>
             </div>
           ))}
+        </div>
         </div>
         
         {/* Color details */}

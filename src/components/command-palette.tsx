@@ -25,8 +25,8 @@ export function CommandPalette() {
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center pt-[15vh] bg-black/60 backdrop-blur-sm">
-      <div className="w-full max-w-xl bg-bg-panel border border-border-line rounded-xl shadow-2xl overflow-hidden flex flex-col">
+    <div className="fixed inset-0 z-50 flex items-start justify-center sm:pt-[15vh] bg-bg-base sm:bg-black/60 sm:backdrop-blur-sm">
+      <div className="w-full h-full sm:h-auto sm:max-w-xl bg-bg-panel sm:border sm:border-border-line sm:rounded-xl shadow-2xl overflow-hidden flex flex-col">
         <Command
           className="flex flex-col w-full h-full text-text-primary"
           onKeyDown={(e) => {
@@ -41,7 +41,7 @@ export function CommandPalette() {
               autoFocus
             />
           </div>
-          <Command.List className="max-h-[300px] overflow-y-auto overflow-x-hidden p-2">
+          <Command.List className="flex-1 sm:max-h-[300px] overflow-y-auto overflow-x-hidden p-2">
             <Command.Empty className="py-6 text-center text-sm text-text-muted">
               No tools found.
             </Command.Empty>

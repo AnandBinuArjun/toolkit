@@ -14,6 +14,7 @@ export default function JsonFormatterPage() {
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const [status, setStatus] = useState<"READY" | "PROCESSING">("READY");
+  const [activeTab, setActiveTab] = useState<"input" | "output">("input");
 
   const formatJson = (space: number) => {
     setStatus("PROCESSING");
@@ -54,11 +55,27 @@ export default function JsonFormatterPage() {
 
   return (
     <ToolLayout id={tool.id} name={tool.name} description={tool.description} status={status}>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 h-[600px]">
-        <div className="flex flex-col h-full">
+      <div className="flex flex-col lg:hidden mb-4">
+        <div className="flex bg-bg-base border border-border-line rounded overflow-hidden">
+          <button 
+            className={`flex-1 py-2 text-sm font-medium ${activeTab === "input" ? "bg-accent-primary/10 text-accent-primary" : "text-text-muted hover:bg-bg-panel"}`}
+            onClick={() => setActiveTab("input")}
+          >
+            Input
+          </button>
+          <button 
+            className={`flex-1 py-2 text-sm font-medium border-l border-border-line ${activeTab === "output" ? "bg-accent-primary/10 text-accent-primary" : "text-text-muted hover:bg-bg-panel"}`}
+            onClick={() => setActiveTab("output")}
+          >
+            Output
+          </button>
+        </div>
+      </div>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 h-[500px] lg:h-[600px]">
+        <div className={`flex-col h-full ${activeTab === "input" ? "flex" : "hidden lg:flex"}`}>
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs font-sans font-medium text-text-muted">Input</span>
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2">
               <button 
                 onClick={() => setInput("")}
                 className="text-xs flex items-center gap-1 text-text-muted hover:text-accent-danger transition-colors"
@@ -76,10 +93,10 @@ export default function JsonFormatterPage() {
           />
         </div>
 
-        <div className="flex flex-col h-full">
+        <div className={`flex-col h-full ${activeTab === "output" ? "flex" : "hidden lg:flex"}`}>
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs font-sans font-medium text-text-muted">Output</span>
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2">
               <button 
                 onClick={prettifyJson}
                 className="text-xs px-2 py-1 bg-bg-base border border-border-line rounded hover:border-accent-primary hover:text-accent-primary transition-all font-mono"
@@ -112,6 +129,7 @@ export default function JsonFormatterPage() {
                 className="w-full h-full p-4 font-mono text-sm text-text-primary bg-transparent focus:outline-none resize-none"
                 value={output}
                 readOnly
+                spellCheck={false}
               />
             )}
           </div>

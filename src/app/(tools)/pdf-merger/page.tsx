@@ -5,6 +5,23 @@ import { ToolLayout } from "@/components/tool-layout";
 import { FileDown, FilePlus, Upload, Trash2, GripVertical } from "lucide-react";
 import { PDFDocument } from "pdf-lib";
 import { Input } from "@/components/ui/input";
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  TouchSensor,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+  useSortable,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 interface PdfFile {
   id: string;
@@ -13,11 +30,50 @@ interface PdfFile {
   size: string;
 }
 
+function SortableItem(props: { id: string; pdf: PdfFile; onRemove: (id: string) => void }) {
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: props.id });
+  const style = { 
+    transform: CSS.Transform.toString(transform), 
+    transition,
+    zIndex: isDragging ? 10 : 1,
+    position: "relative" as const
+  };
+  
+  return (
+    <div ref={setNodeRef} style={style} className={`p-4 flex items-center justify-between bg-bg-panel hover:bg-black/60 transition-colors ${isDragging ? 'opacity-50 shadow-lg' : ''}`}>
+      <div className="flex items-center gap-4">
+        <button 
+          {...attributes} 
+          {...listeners} 
+          className="text-text-muted hover:text-white cursor-grab active:cursor-grabbing p-2 -ml-2 touch-none"
+        >
+          <GripVertical className="w-5 h-5" />
+        </button>
+        <div>
+          <div className="font-semibold text-white truncate max-w-[200px] md:max-w-md">{props.pdf.name}</div>
+          <div className="text-xs font-sans font-medium text-text-muted">{props.pdf.size}</div>
+        </div>
+      </div>
+      <button 
+        onClick={() => props.onRemove(props.id)}
+        className="p-2 text-accent-danger hover:bg-accent-danger/20 rounded transition-colors"
+      >
+        <Trash2 className="w-5 h-5" />
+      </button>
+    </div>
+  );
+}
 
 export default function PdfMerger() {
   const [pdfs, setPdfs] = useState<PdfFile[]>([]);
   const [isProcessing, setIsProcessing] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
+    useSensor(TouchSensor, { activationConstraint: { delay: 250, tolerance: 5 } }),
+    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
+  );
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -35,18 +91,15 @@ export default function PdfMerger() {
     setPdfs(pdfs.filter(p => p.id !== id));
   };
 
-  const moveUp = (index: number) => {
-    if (index === 0) return;
-    const newPdfs = [...pdfs];
-    [newPdfs[index - 1], newPdfs[index]] = [newPdfs[index], newPdfs[index - 1]];
-    setPdfs(newPdfs);
-  };
-
-  const moveDown = (index: number) => {
-    if (index === pdfs.length - 1) return;
-    const newPdfs = [...pdfs];
-    [newPdfs[index], newPdfs[index + 1]] = [newPdfs[index + 1], newPdfs[index]];
-    setPdfs(newPdfs);
+  const handleDragEnd = (event: any) => {
+    const { active, over } = event;
+    if (over && active.id !== over.id) {
+      setPdfs((items) => {
+        const oldIndex = items.findIndex(item => item.id === active.id);
+        const newIndex = items.findIndex(item => item.id === over.id);
+        return arrayMove(items, oldIndex, newIndex);
+      });
+    }
   };
 
   const mergePDFs = async () => {
@@ -111,28 +164,22 @@ export default function PdfMerger() {
              <span>{pdfs.length} Document(s) Ready to Merge</span>
            </div>
            
-           <div className="divide-y divide-border-line">
-             {pdfs.map((pdf, idx) => (
-               <div key={pdf.id} className="p-4 flex items-center justify-between bg-bg-panel hover:bg-black/60 transition-colors">
-                  <div className="flex items-center gap-4">
-                    <div className="flex flex-col gap-1 text-faint">
-                      <button onClick={() => moveUp(idx)} disabled={idx === 0} className="hover:text-white disabled:opacity-30">▲</button>
-                      <button onClick={() => moveDown(idx)} disabled={idx === pdfs.length - 1} className="hover:text-white disabled:opacity-30">▼</button>
-                    </div>
-                    <div>
-                      <div className="font-semibold text-white">{pdf.name}</div>
-                      <div className="text-xs font-sans font-medium text-text-muted">{pdf.size}</div>
-                    </div>
-                  </div>
-                  <button 
-                    onClick={() => removePdf(pdf.id)}
-                    className="p-2 text-accent-danger hover:bg-accent-danger/20 rounded transition-colors"
-                  >
-                    <Trash2 className="w-5 h-5" />
-                  </button>
+           <DndContext 
+             sensors={sensors}
+             collisionDetection={closestCenter}
+             onDragEnd={handleDragEnd}
+           >
+             <SortableContext 
+               items={pdfs.map(p => p.id)}
+               strategy={verticalListSortingStrategy}
+             >
+               <div className="divide-y divide-border-line">
+                 {pdfs.map((pdf) => (
+                   <SortableItem key={pdf.id} id={pdf.id} pdf={pdf} onRemove={removePdf} />
+                 ))}
                </div>
-             ))}
-           </div>
+             </SortableContext>
+           </DndContext>
 
            <div className="p-4 border-t border-border-line bg-bg-panel flex justify-end">
               <button 

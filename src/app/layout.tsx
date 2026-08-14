@@ -72,7 +72,7 @@ export default function RootLayout({
           <nav className="border-b border-border-line bg-bg-panel/60 backdrop-blur-md sticky top-0 z-40 transition-colors duration-300" style={{ boxShadow: "0 1px 0 var(--color-accent-primary)" }}>
             <div className="container mx-auto px-4 h-16 flex items-center justify-between">
               <Link href="/" className="flex items-center gap-2.5 group">
-                <Image src="/logo.png" alt="ToolKit Logo" width={140} height={48} className="h-12 w-auto object-contain dark:invert" priority />
+                <Image src="/logo.png" alt="ToolKit Logo" width={140} height={48} className="h-8 sm:h-10 w-auto object-contain dark:invert" priority />
               </Link>
               <div className="flex items-center gap-2">
                 <SearchButton />
@@ -86,16 +86,16 @@ export default function RootLayout({
           </main>
 
         <footer className="border-t border-border-line bg-bg-panel/30 py-8 mt-auto">
-          <div className="container mx-auto px-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-            <div className="flex flex-col gap-2">
+          <div className="container mx-auto px-4 flex flex-col sm:flex-row items-center sm:justify-between gap-6 text-center sm:text-left">
+            <div className="flex flex-col gap-2 items-center sm:items-start">
               <div className="text-sm font-medium text-text-primary">
                 &copy; {new Date().getFullYear()} Anand Binu Arjun
               </div>
-              <div className="text-xs font-mono text-text-muted flex flex-wrap gap-4">
-                <a href="https://abarjun.online" target="_blank" rel="noopener noreferrer" className="hover:text-accent-primary transition-colors">
+              <div className="text-xs font-mono text-text-muted flex flex-wrap justify-center sm:justify-start gap-4">
+                <a href="https://abarjun.online" target="_blank" rel="noopener noreferrer" className="hover:text-accent-primary transition-colors py-1">
                   abarjun.online
                 </a>
-                <a href="https://github.com/AnandBinuArjun" target="_blank" rel="noopener noreferrer" className="hover:text-accent-primary transition-colors">
+                <a href="https://github.com/AnandBinuArjun" target="_blank" rel="noopener noreferrer" className="hover:text-accent-primary transition-colors py-1">
                   GitHub
                 </a>
               </div>

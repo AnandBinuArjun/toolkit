@@ -57,23 +57,23 @@ export function OfflineIndicator() {
           initial={{ opacity: 0, y: 50, scale: 0.9 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 50, scale: 0.9 }}
-          className="fixed bottom-6 right-6 z-[100] flex items-center gap-3 px-4 py-3 rounded-full bg-bg-panel border border-border-line shadow-[0_0_40px_rgba(0,0,0,0.1)] backdrop-blur-md"
+          className="fixed bottom-6 right-6 mb-[env(safe-area-inset-bottom)] z-[100] flex items-center gap-0 sm:gap-3 px-3 sm:px-4 py-3 rounded-full bg-bg-panel border border-border-line shadow-[0_0_40px_rgba(0,0,0,0.1)] backdrop-blur-md"
         >
           {isOffline ? (
             <>
-              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-accent-danger/10 text-accent-danger">
+              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-accent-danger/10 text-accent-danger" title="You are offline">
                 <WifiOff size={16} />
               </div>
-              <span className="text-sm font-medium text-text-primary">
+              <span className="hidden sm:inline text-sm font-medium text-text-primary">
                 You are offline. Tools work locally!
               </span>
             </>
           ) : (
             <>
-              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-accent-primary/10 text-accent-primary">
+              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-accent-primary/10 text-accent-primary" title="App is ready for offline use">
                 <Zap size={16} />
               </div>
-              <span className="text-sm font-medium text-text-primary">
+              <span className="hidden sm:inline text-sm font-medium text-text-primary">
                 App is ready for offline use.
               </span>
             </>

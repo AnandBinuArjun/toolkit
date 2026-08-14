@@ -128,6 +128,25 @@
   /* Mono font only for actual code/data output — never general UI */
   .font-code, pre, code {
     font-family: var(--font-geist-mono), "Cascadia Code", monospace;
-    @apply break-words whitespace-pre-wrap overflow-x-auto;
+    @apply overflow-x-auto;
+  }
+  
+  /* Prevent iOS auto-zoom on focus by enforcing 16px min size on mobile */
+  input, textarea, select {
+    @apply text-base sm:text-sm;
+    font-size: 16px !important;
+  }
+  
+  /* Ensure range sliders have adequate tap targets on mobile */
+  input[type="range"] {
+    min-height: 44px;
+    cursor: pointer;
+  }
+  
+  /* Make checkboxes and radios have larger tap targets */
+  input[type="checkbox"], input[type="radio"] {
+    min-width: 24px;
+    min-height: 24px;
+    cursor: pointer;
   }
 }

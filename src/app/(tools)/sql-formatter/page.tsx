@@ -16,6 +16,7 @@ export default function SqlFormatterPage() {
   const [copied, setCopied] = useState(false);
   const [dialect, setDialect] = useState<string>("sql");
   const [status, setStatus] = useState<"READY" | "PROCESSING">("READY");
+  const [activeTab, setActiveTab] = useState<"input" | "output">("input");
 
   const formatSql = () => {
     setStatus("PROCESSING");
@@ -61,7 +62,7 @@ export default function SqlFormatterPage() {
   return (
     <ToolLayout id={tool.id} name={tool.name} description={tool.description} status={status}>
       <div className="flex flex-col space-y-4 h-[600px]">
-        <div className="flex items-center gap-4 p-4 border border-border-line rounded-lg bg-bg-base">
+        <div className="flex flex-wrap items-center gap-4 p-4 border border-border-line rounded-lg bg-bg-base">
           <span className="text-xs font-sans font-medium text-text-muted">Dialect:</span>
           <select 
             className="bg-bg-panel border border-border-line rounded px-2 py-1 text-sm font-mono text-text-primary focus:outline-none focus:border-accent-primary"
@@ -77,8 +78,25 @@ export default function SqlFormatterPage() {
           </select>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 flex-1 h-full">
-          <div className="flex flex-col h-full">
+        <div className="flex flex-col lg:hidden mb-0">
+          <div className="flex bg-bg-base border border-border-line rounded overflow-hidden">
+            <button 
+              className={`flex-1 py-2 text-sm font-medium ${activeTab === "input" ? "bg-accent-primary/10 text-accent-primary" : "text-text-muted hover:bg-bg-panel"}`}
+              onClick={() => setActiveTab("input")}
+            >
+              Input
+            </button>
+            <button 
+              className={`flex-1 py-2 text-sm font-medium border-l border-border-line ${activeTab === "output" ? "bg-accent-primary/10 text-accent-primary" : "text-text-muted hover:bg-bg-panel"}`}
+              onClick={() => setActiveTab("output")}
+            >
+              Output
+            </button>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 flex-1 h-[400px] lg:h-full">
+          <div className={`flex-col h-full ${activeTab === "input" ? "flex" : "hidden lg:flex"}`}>
             <div className="flex items-center justify-between mb-2">
               <span className="text-xs font-sans font-medium text-text-muted">Input</span>
               <button 
@@ -97,7 +115,7 @@ export default function SqlFormatterPage() {
             />
           </div>
 
-          <div className="flex flex-col h-full">
+          <div className={`flex-col h-full ${activeTab === "output" ? "flex" : "hidden lg:flex"}`}>
             <div className="flex items-center justify-between mb-2">
               <span className="text-xs font-sans font-medium text-text-muted">Output</span>
               <button 
@@ -119,6 +137,7 @@ export default function SqlFormatterPage() {
                   className="w-full h-full p-4 font-mono text-sm text-text-primary bg-transparent focus:outline-none resize-none"
                   value={output}
                   readOnly
+                  spellCheck={false}
                 />
               )}
             </div>

@@ -114,7 +114,7 @@ export default function TypingTest() {
         </div>
 
         <div 
-          className="bg-bg-panel border border-border-line rounded-xl p-8 mb-8 text-xl leading-relaxed font-mono relative overflow-hidden"
+          className="bg-bg-panel border border-border-line rounded-xl p-8 mb-8 text-xl leading-relaxed font-mono relative overflow-hidden touch-none"
           onClick={() => inputRef.current?.focus()}
         >
           {status === "finished" ? (
